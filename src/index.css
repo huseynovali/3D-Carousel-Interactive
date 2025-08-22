@@ -13,3 +13,47 @@
 .bg-linear-3 {
   background: linear-gradient(-135deg, #FF5353 0%, #FFFFFF 100%);
 }
+
+.carousel-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: #181824;
+  border-radius: 50%;
+  overflow: visible;
+}
+.carousel-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 350px;
+  height: 350px;
+  border: 10px solid #444;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.carousel-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.carousel-item {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px #0004;
+}
+.carousel-item img {
+  width: 90px;
+  height: auto;
+}

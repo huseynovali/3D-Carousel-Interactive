@@ -7,6 +7,7 @@ function ProductDetail() {
   const id = window.location.pathname.split("/")[1];
   const product = data.find((item) => item.id === parseInt(id));
   const sameProducts = data.filter((item) => item.id !== parseInt(id));
+
   return (
     <div className="h-[calc(100vh-114px)] relative overflow-hidden">
       <div className="absolute inset-0  flex justify-center items-center">
@@ -25,7 +26,7 @@ function ProductDetail() {
           <ProductImages images={product.images} />
         </div>
         <div className="same_product w-[30%]">
-          <SameProduct product={sameProducts} />
+          <SameProduct products={sameProducts} />
         </div>
       </div>
     </div>
