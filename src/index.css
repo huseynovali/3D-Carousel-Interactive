@@ -4,3 +4,12 @@
 .bg-linear {
   background: linear-gradient(135deg, #3C3D41 0%, #1D1E25 39%,#181820 100%);
 }
+.bg-linear-1 {
+  background: linear-gradient(-135deg, #FF67F9 0%, #DB6EFA 26%,#0085FF 100%);
+}
+.bg-linear-2 {
+  background: linear-gradient(-135deg, #CC0087 0%, #905CFF 100%);
+}
+.bg-linear-3 {
+  background: linear-gradient(-135deg, #FF5353 0%, #FFFFFF 100%);
+}
