@@ -5,7 +5,7 @@ function Navbar() {
       <img src={NikeLogo} alt="Nike Logo" className="w-[107px] h-[40px]" />
       <div className="flex justify-between items-center">
         <div>
-          <ul className="flex space-x-16 text-white">
+          <ul className="flex space-x-16 text-white outline-none">
             <li className="text-[25px] font-medium">
               <a href="#">Home</a>
             </li>
@@ -55,7 +55,7 @@ function Navbar() {
               <path d="M18 7h-3V6a3 3 0 0 0-6 0v1H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm-7-1a1 1 0 0 1 2 0v1h-2V6zm6 13H7V9h2v1.5a1 1 0 0 0 2 0V9h2v1.5a1 1 0 0 0 2 0V9h2v10z" />
             </svg>
           </button>
-          <button className="text-red-400 hover:text-red-700">
+          <button className="text-red-400 hover:text-red-500">
             <svg
               width="50px"
               height="50px"
