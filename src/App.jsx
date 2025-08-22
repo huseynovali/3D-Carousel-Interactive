@@ -1,9 +1,12 @@
+import MainLayout from "./layout/MainLayout";
 import ProductDetail from "./page/ProductDetail";
 
 function App() {
   return (
     <>
-      <ProductDetail />
+      <MainLayout>
+        <ProductDetail />
+      </MainLayout>
     </>
   );
 }
