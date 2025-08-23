@@ -1,12 +1,39 @@
+import { useEffect, useState } from "react";
 import BigNikeLogo from "../assets/bigNikeLogo.png";
 import ProductAbout from "../components/ProductAbout";
 import ProductImages from "../components/ProductImages";
 import SameProduct from "../components/SameProduct";
 import { data } from "../data";
 function ProductDetail() {
-  const id = window.location.pathname.split("/")[1];
-  const product = data.find((item) => item.id === parseInt(id));
-  const sameProducts = data.filter((item) => item.id !== parseInt(id));
+  // URL'den ID'yi al ve state olarak sakla
+  const [currentId, setCurrentId] = useState(window.location.pathname.split("/")[1] || "1");
+  
+  // URL değişikliklerini dinle
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const pathId = window.location.pathname.split("/")[1];
+      setCurrentId(pathId || "1");
+    };
+
+    // Popstate eventi URL değişikliklerini yakalar
+    window.addEventListener("popstate", handleLocationChange);
+    
+    // Başlangıçta bir kere çalıştır
+    handleLocationChange();
+
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+    };
+  }, []);
+
+  // Ürün değişikliğini yönet
+  const handleProductChange = (newId) => {
+    window.history.pushState(null, "", `/${newId}`);
+    setCurrentId(newId);
+  };
+  
+  // Mevcut ID'ye göre ürünü bul
+  const product = data.find((item) => item.id === parseInt(currentId)) || data[0];
 
   return (
     <div className="h-[calc(100vh-114px)] relative overflow-hidden">
@@ -23,10 +50,10 @@ function ProductDetail() {
           <ProductAbout product={product} />
         </div>
         <div className="product_images">
-          <ProductImages images={product.images} />
+          <ProductImages product={product} />
         </div>
         <div className="same_product w-[30%]">
-          <SameProduct products={sameProducts} />
+          <SameProduct products={data} currentId={currentId} onChangeProduct={handleProductChange} />
         </div>
       </div>
     </div>

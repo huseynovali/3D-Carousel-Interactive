@@ -40,4 +40,5 @@ export const data = [
     sizes: [40, 41, 42, 43],
     images: [NikeAirMax1, NikeAirMax2, NikeAirMax3],
   },
+
 ];
