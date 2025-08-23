@@ -1,19 +1,112 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 function ProductAbout({ product }) {
   const [selectedSize, setSelectedSize] = useState(40);
+  const [currentProduct, setCurrentProduct] = useState(product);
+  const [nextProduct, setNextProduct] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Referanslar - sadece isim ve fiyat için referanslar bırakıldı
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+
+  // Ürün değişikliğini tespit et
+  useEffect(() => {
+    if (product?.id !== currentProduct?.id) {
+      setNextProduct(product);
+    }
+  }, [product]);
+
+  // Animasyon efekti - sadece isim ve fiyat için
+  useEffect(() => {
+    if (nextProduct && !isAnimating) {
+      setIsAnimating(true);
+
+      // Animasyon timeline'ı
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setCurrentProduct(nextProduct);
+          setNextProduct(null);
+          setIsAnimating(false);
+        },
+      });
+
+      // ESKİ İSİM VE FİYATI YUKARI KAYDIR
+      tl.to([nameRef.current, priceRef.current], {
+        y: -80,
+        opacity: 1, // Opacity 0 olarak düzeltildi
+        duration: 0.4,
+        ease: "power1.out",
+        stagger: 0.05,
+      });
+
+      // Yeni ürünü güncelle
+      tl.call(() => {
+        setCurrentProduct(nextProduct);
+      });
+
+      // YENİ İSİM VE FİYATI AŞAĞIDAN YUKARI GETİR
+      tl.fromTo(
+        [nameRef.current, priceRef.current],
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: 0.05,
+        }
+      );
+    }
+  }, [nextProduct]);
+
+  // İlk yükleme animasyonu - sadece isim ve fiyat için
+  useEffect(() => {
+    if (nameRef.current && !isAnimating) {
+      const tl = gsap.timeline();
+
+      // İsim ve fiyatı aynı anda hareket ettir
+      tl.fromTo(
+        [nameRef.current, priceRef.current],
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "back.out(1.2)",
+          stagger: 0.05,
+        }
+      );
+    }
+  }, []);
 
   return (
-    <div className="">
-      <p className="text-[55px] font-medium text-white">{product.name}</p>
-      <span className="text-[35px] font-medium text-white">
-        ${product.price}
-      </span>
+    <div className="relative">
+      <div className="h-[80px] overflow-hidden">
+        <p
+          ref={nameRef}
+          className="text-[55px] font-medium text-white w-[500px]"
+        >
+          {currentProduct?.name}
+        </p>
+      </div>
+
+      <div className="h-[50px] overflow-hidden mt-2 mb-4">
+        <span
+          ref={priceRef}
+          className="text-[35px] font-medium text-white block"
+        >
+          ${currentProduct?.price}
+        </span>
+      </div>
+
       <div>
         <h4 className="text-[25px] font-medium text-white mb-2">Size</h4>
         <div className="flex gap-4">
-          {product.sizes.map((size) => (
+          {currentProduct?.sizes?.map((size) => (
             <span
+              key={size}
               className={`border text-black rounded-full px-3 py-2 cursor-pointer ${
                 selectedSize === size
                   ? "bg-gray-300 border-white "
@@ -25,10 +118,11 @@ function ProductAbout({ product }) {
             </span>
           ))}
         </div>
-        <button className="bg-[#ED3B6B] rounded-[11px] w-[240px] text-[18px] py-4 font-semibold text-white my-5">
-          BUY
-        </button>
       </div>
+
+      <button className="bg-[#ED3B6B] rounded-[11px] w-[240px] text-[18px] py-4 font-semibold text-white my-5">
+        BUY
+      </button>
     </div>
   );
 }
