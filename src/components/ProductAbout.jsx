@@ -7,23 +7,19 @@ function ProductAbout({ product }) {
   const [nextProduct, setNextProduct] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Referanslar - sadece isim ve fiyat için referanslar bırakıldı
   const nameRef = useRef(null);
   const priceRef = useRef(null);
 
-  // Ürün değişikliğini tespit et
   useEffect(() => {
     if (product?.id !== currentProduct?.id) {
       setNextProduct(product);
     }
   }, [product]);
 
-  // Animasyon efekti - sadece isim ve fiyat için
   useEffect(() => {
     if (nextProduct && !isAnimating) {
       setIsAnimating(true);
 
-      // Animasyon timeline'ı
       const tl = gsap.timeline({
         onComplete: () => {
           setCurrentProduct(nextProduct);
@@ -32,21 +28,18 @@ function ProductAbout({ product }) {
         },
       });
 
-      // ESKİ İSİM VE FİYATI YUKARI KAYDIR
       tl.to([nameRef.current, priceRef.current], {
         y: -80,
-        opacity: 1, // Opacity 0 olarak düzeltildi
+        opacity: 1, 
         duration: 0.4,
         ease: "power1.out",
         stagger: 0.05,
       });
 
-      // Yeni ürünü güncelle
       tl.call(() => {
         setCurrentProduct(nextProduct);
       });
 
-      // YENİ İSİM VE FİYATI AŞAĞIDAN YUKARI GETİR
       tl.fromTo(
         [nameRef.current, priceRef.current],
         { y: 50, opacity: 0 },
@@ -61,12 +54,10 @@ function ProductAbout({ product }) {
     }
   }, [nextProduct]);
 
-  // İlk yükleme animasyonu - sadece isim ve fiyat için
   useEffect(() => {
     if (nameRef.current && !isAnimating) {
       const tl = gsap.timeline();
 
-      // İsim ve fiyatı aynı anda hareket ettir
       tl.fromTo(
         [nameRef.current, priceRef.current],
         { y: 30, opacity: 0 },
