@@ -5,20 +5,20 @@ import ProductImages from "../components/ProductImages";
 import SameProduct from "../components/SameProduct";
 import { data } from "../data";
 function ProductDetail() {
-  // URL'den ID'yi al ve state olarak sakla
+ 
   const [currentId, setCurrentId] = useState(window.location.pathname.split("/")[1] || "1");
   
-  // URL değişikliklerini dinle
+ 
   useEffect(() => {
     const handleLocationChange = () => {
       const pathId = window.location.pathname.split("/")[1];
       setCurrentId(pathId || "1");
     };
 
-    // Popstate eventi URL değişikliklerini yakalar
+  
     window.addEventListener("popstate", handleLocationChange);
     
-    // Başlangıçta bir kere çalıştır
+   
     handleLocationChange();
 
     return () => {
@@ -26,13 +26,13 @@ function ProductDetail() {
     };
   }, []);
 
-  // Ürün değişikliğini yönet
+ 
   const handleProductChange = (newId) => {
     window.history.pushState(null, "", `/${newId}`);
     setCurrentId(newId);
   };
   
-  // Mevcut ID'ye göre ürünü bul
+ 
   const product = data.find((item) => item.id === parseInt(currentId)) || data[0];
 
   return (
