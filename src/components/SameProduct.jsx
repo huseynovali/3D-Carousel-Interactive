@@ -2,8 +2,7 @@ import React from "react";
 
 function SameProduct({ products, currentId, onChangeProduct }) {
   const radius = 200;
-  
-  // Ürün seçildiğinde üst bileşene bildir
+
   const handleProductClick = (newId) => {
     console.log("Ürün seçildi, ID:", newId);
     if (onChangeProduct) {
