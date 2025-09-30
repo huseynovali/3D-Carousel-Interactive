@@ -4,7 +4,6 @@ function SameProduct({ products, currentId, onChangeProduct }) {
   const radius = 200;
 
   const handleProductClick = (newId) => {
-    console.log("Ürün seçildi, ID:", newId);
     if (onChangeProduct) {
       onChangeProduct(newId);
     }
